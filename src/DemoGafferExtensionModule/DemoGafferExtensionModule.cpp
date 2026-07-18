@@ -7,7 +7,6 @@
 using namespace boost::python;
 using namespace GafferScene;
 
-BOOST_PYTHON_MODULE( _DemoGafferExtension )
-{
-	GafferBindings::DependencyNodeClass<DemoGafferExtension::DemoSceneProcessor>();
+BOOST_PYTHON_MODULE(_DemoGafferExtension) {
+    GafferBindings::DependencyNodeClass<DemoGafferExtension::DemoSceneProcessor>();
 }

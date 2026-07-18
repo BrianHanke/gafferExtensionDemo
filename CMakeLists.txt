@@ -35,14 +35,14 @@ target_link_libraries(DemoGafferExtension PRIVATE Gaffer GafferScene IECore)
 
 install(TARGETS DemoGafferExtension DESTINATION lib)
 
-# Build the python bindings
+# Build the Python bindings
 add_library(DemoGafferExtensionModule SHARED
     src/DemoGafferExtensionModule/DemoGafferExtensionModule.cpp
 )
 set_target_properties(DemoGafferExtensionModule PROPERTIES
     PREFIX ""
     OUTPUT_NAME "_DemoGafferExtension"
-	SUFFIX ".pyd"
+    SUFFIX ".pyd"
 )
 target_compile_definitions(DemoGafferExtensionModule PRIVATE ${GAFFER_COMPILE_DEFS})
 target_link_libraries(DemoGafferExtensionModule PRIVATE DemoGafferExtension)
@@ -59,15 +59,14 @@ if(APPLE)
         boost_python
         Python
     )
-else()
-    # Windows/Linux
+else() # Windows/Linux
     target_include_directories(DemoGafferExtensionModule PRIVATE
         include
         ${GAFFER_ROOT}/include
         ${GAFFER_ROOT}/include/Imath
         ${GAFFER_ROOT}/include/OpenEXR
     )
-	target_link_directories(DemoGafferExtensionModule PRIVATE ${GAFFER_ROOT}/lib)
+    target_link_directories(DemoGafferExtensionModule PRIVATE ${GAFFER_ROOT}/lib)
     target_compile_definitions(DemoGafferExtensionModule PRIVATE
         BOOST_ALL_NO_LIB
         BOOST_PYTHON_DYNAMIC_LIB
@@ -83,9 +82,9 @@ else()
     )
 endif()
 
-install( TARGETS DemoGafferExtensionModule DESTINATION python/DemoGafferExtension )
+install(TARGETS DemoGafferExtensionModule DESTINATION python/DemoGafferExtension)
 
-# Build the python modules
+# Build the Python modules and install
 set(PYTHON_MODULES
     DemoGafferExtension
     DemoGafferExtensionTest
@@ -93,7 +92,6 @@ set(PYTHON_MODULES
     DemoGafferExtensionUITest
 )
 
-# Install
 foreach(module IN LISTS PYTHON_MODULES)
     install(
         DIRECTORY python/${module}/
