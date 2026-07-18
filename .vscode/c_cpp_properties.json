@@ -1,0 +1,54 @@
+{
+    "env": {
+    	"GAFFER_ROOT": "C:/Source/gaffer16-build"
+	},
+	"configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/include",
+				"${env:GAFFER_ROOT}/include/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+				"Gaffer_EXPORTS",
+				"GafferImage_EXPORTS",
+				"GafferImageUI_EXPORTS",
+				"GafferML_EXPORTS",
+				"GafferScene_EXPORTS",
+				"GafferUI_EXPORTS",
+				"GafferSceneUI_EXPORTS",
+				"NOMINMAX",
+				"MD",
+				"_MT",
+				"CCL_NAMESPACE_BEGIN=namespace ccl {",
+				"CCL_NAMESPACE_END=}",
+				"EMBREE_MAJOR_VERSION=4",
+				"PATH_GUIDING_LEVEL=5",
+				"WITH_ALEMBIC",
+				"WITH_EMBREE",
+				"WITH_OCIO",
+				"WITH_OPENSUBDIV",
+				"WITH_OPENVDB",
+				"WITH_NANOVDB",
+				"WITH_OSL",
+				"WITH_PATH_GUIDING",
+				"WITH_SYSTEM_PUGIXML",
+				"WITH_CUDA",
+				"WITH_CUDA_DYNLOAD",
+				"WITH_OPTIX"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "compilerPath": "cl.exe",
+			"compilerArgs": [
+                "/permissive-"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}

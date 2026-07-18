@@ -2,7 +2,7 @@
 
 #include "IECore/NullObject.h"
 
-#include "OpenEXR/ImathBox.h"
+#include "Imath/ImathBox.h"
 
 IE_CORE_DEFINERUNTIMETYPED( DemoGafferExtension::DemoSceneProcessor );
 
