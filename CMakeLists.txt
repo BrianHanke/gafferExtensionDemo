@@ -1,28 +1,24 @@
 cmake_minimum_required(VERSION 3.16...4.2)
-project(DemoGafferExtension CXX)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+project(DemoGafferExtension VERSION 2026.7.0 LANGUAGES CXX)
 
+# User-customizable paths
 set(CMAKE_INSTALL_PREFIX "C:/Source/gafferExtensionDemo/release")
 set(GAFFER_ROOT "C:/onedrive/Software/gaffer")
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(GAFFER_COMPILE_DEFS
     BOOST_SIGNALS_NO_DEPRECATION_WARNING=1
     _GLIBCXX_USE_CXX11_ABI=0
 )
-
 if(APPLE)
-  set(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
-endif(APPLE)
+	set(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
+endif()
 
 # Build the library
-add_library(DemoGafferExtension SHARED
-    src/DemoGafferExtension/DemoSceneProcessor.cpp
-)
-set_target_properties(DemoGafferExtension PROPERTIES
-    WINDOWS_EXPORT_ALL_SYMBOLS TRUE
-)
+add_library(DemoGafferExtension SHARED src/DemoGafferExtension/DemoSceneProcessor.cpp)
+set_target_properties(DemoGafferExtension PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 target_compile_definitions(DemoGafferExtension PRIVATE ${GAFFER_COMPILE_DEFS})
 target_include_directories(DemoGafferExtension PRIVATE
     include
@@ -36,9 +32,7 @@ target_link_libraries(DemoGafferExtension PRIVATE Gaffer GafferScene IECore)
 install(TARGETS DemoGafferExtension DESTINATION lib)
 
 # Build the Python bindings
-add_library(DemoGafferExtensionModule SHARED
-    src/DemoGafferExtensionModule/DemoGafferExtensionModule.cpp
-)
+add_library(DemoGafferExtensionModule SHARED src/DemoGafferExtensionModule/DemoGafferExtensionModule.cpp)
 set_target_properties(DemoGafferExtensionModule PROPERTIES
     PREFIX ""
     OUTPUT_NAME "_DemoGafferExtension"
@@ -47,7 +41,7 @@ set_target_properties(DemoGafferExtensionModule PROPERTIES
 target_compile_definitions(DemoGafferExtensionModule PRIVATE ${GAFFER_COMPILE_DEFS})
 target_link_libraries(DemoGafferExtensionModule PRIVATE DemoGafferExtension)
 
-if(APPLE)
+if(APPLE) # Not tested, this probably won't work as-is ("Python.framework" in particular)
     target_include_directories(DemoGafferExtensionModule PRIVATE
         include
         ${GAFFER_ROOT}/include
@@ -78,7 +72,7 @@ else() # Windows/Linux
         IECore
         GafferBindings
         IECorePython
-        boost_python311
+        boost_python311 # Hard-coded to Python 3.11, included with Gaffer 1.6
     )
 endif()
 
@@ -93,8 +87,7 @@ set(PYTHON_MODULES
 )
 
 foreach(module IN LISTS PYTHON_MODULES)
-    install(
-        DIRECTORY python/${module}/
+    install(DIRECTORY python/${module}/
         DESTINATION python/${module}
         FILES_MATCHING PATTERN "*.py"
     )
@@ -102,8 +95,7 @@ endforeach()
 
 install(DIRECTORY startup/ DESTINATION startup FILES_MATCHING PATTERN "*.py")
 
-install(
-    DIRECTORY resources/
+install(DIRECTORY resources/
     DESTINATION resources
     FILES_MATCHING PATTERN "*.gfr"
     PERMISSIONS OWNER_READ GROUP_READ WORLD_READ
