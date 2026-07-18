@@ -5,10 +5,11 @@ project(DemoGafferExtension VERSION 2026.7.0 LANGUAGES CXX)
 # User-customizable paths
 set(CMAKE_INSTALL_PREFIX "C:/Source/gafferExtensionDemo/release")
 set(GAFFER_ROOT "C:/onedrive/Software/gaffer")
+set(GAFFER_PYTHON_VERSION 311)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(GAFFER_COMPILE_DEFS
+set(GAFFER_COMPILE_FLAGS
     BOOST_SIGNALS_NO_DEPRECATION_WARNING=1
     _GLIBCXX_USE_CXX11_ABI=0
 )
@@ -19,7 +20,7 @@ endif()
 # Build the library
 add_library(DemoGafferExtension SHARED src/DemoGafferExtension/DemoSceneProcessor.cpp)
 set_target_properties(DemoGafferExtension PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-target_compile_definitions(DemoGafferExtension PRIVATE ${GAFFER_COMPILE_DEFS})
+target_compile_definitions(DemoGafferExtension PRIVATE ${GAFFER_COMPILE_FLAGS})
 target_include_directories(DemoGafferExtension PRIVATE
     include
     ${GAFFER_ROOT}/include
@@ -38,7 +39,7 @@ set_target_properties(DemoGafferExtensionModule PROPERTIES
     OUTPUT_NAME "_DemoGafferExtension"
     SUFFIX ".pyd"
 )
-target_compile_definitions(DemoGafferExtensionModule PRIVATE ${GAFFER_COMPILE_DEFS})
+target_compile_definitions(DemoGafferExtensionModule PRIVATE ${GAFFER_COMPILE_FLAGS})
 target_link_libraries(DemoGafferExtensionModule PRIVATE DemoGafferExtension)
 
 if(APPLE) # Not tested, this probably won't work as-is ("Python.framework" in particular)
@@ -72,7 +73,7 @@ else() # Windows/Linux
         IECore
         GafferBindings
         IECorePython
-        boost_python311 # Hard-coded to Python 3.11, included with Gaffer 1.6
+        boost_python${GAFFER_PYTHON_VERSION}
     )
 endif()
 
